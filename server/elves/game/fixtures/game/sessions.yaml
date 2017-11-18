@@ -14,3 +14,13 @@
     elves_forest: 3
     elves_mountains: 1
     weather: good
+
+- pk: 2
+  model: game.Day
+  fields:
+    session: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
+    day: 2
+    elves_woods: 6
+    elves_forest: 5
+    elves_mountains: 1
+    weather: snow

@@ -1,5 +1,6 @@
 """Model the basic game systems.
 """
+import random
 from uuid import uuid4
 
 from django.db import models
@@ -19,6 +20,10 @@ class DayQuerySet(models.QuerySet):
                 session=models.F('session')).aggregate(
                     latest=models.functions.Coalesce(models.Max('day'), 0)
             )['latest'] + 1
+
+        if 'weather' not in kwargs:
+            kwargs['weather'] = random.choice(['good', 'good', 'snow'])
+
         return super().create(*args, **kwargs)
 
     def get_current_day(self):
