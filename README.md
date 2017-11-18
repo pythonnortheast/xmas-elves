@@ -7,7 +7,43 @@ should you choose to accept it, is to collect the most
 
 ## Running the Server
 
+### Installing Dependencies
+
+The server is self-contained with an SQLite database, so just install the
+requirements:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Running
+
+We're using Django Channels, so running the server is as easy as:
+
+```bash
+python server/manage.py runserver
+```
+
 ## The API
+
+To interact with the server session, we use a simple REST API to send new data
+into the server.
+
+### Starting a New Session
+
+To start a new session, send a `POST` request with a `name` variable
+form-encoded to `https://<host>/sessions/`:
+
+```bash
+curl https://example.com/sessions/ -X POST -d name="Scott"
+```
+
+and you'll get a simple JSON object back with a `session` URL that you post your
+turns against.
+
+### Taking a Turn
+
+
 
 ## Creating Clients
 

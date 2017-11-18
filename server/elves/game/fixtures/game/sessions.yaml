@@ -1,0 +1,16 @@
+- pk: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
+  model: game.Session
+  fields:
+    uuid: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
+    elves_start: 12
+    player_name: Steve Jones
+
+- pk: 1
+  model: game.Day
+  fields:
+    session: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
+    day: 1
+    elves_woods: 8
+    elves_forest: 3
+    elves_mountains: 1
+    weather: good
