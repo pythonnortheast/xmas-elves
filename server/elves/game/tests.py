@@ -49,6 +49,28 @@ class SessionTestCase(TestCase):
                                  elves_mountains=4)
         self.assertEqual(day.day, 3)
 
+    def test_create_with_day(self):
+        """Can pass the day in manually.
+        """
+        day = Day.objects.create(session=self._get_session(),
+                                 elves_woods=4,
+                                 elves_forest=4,
+                                 elves_mountains=4,
+                                 day=4)
+        self.assertEqual(day.day, 4)
+
+    @patch('elves.game.models.random')
+    def test_create_with_weather(self, random):
+        """Can pass weather in manually.
+        """
+        day = Day.objects.create(session=self._get_session(),
+                                 elves_woods=4,
+                                 elves_forest=4,
+                                 elves_mountains=4,
+                                 weather='good')
+        self.assertEqual(day.weather, 'good')
+        self.assertFalse(random.choice.called)
+
     @patch('elves.game.models.random')
     def test_random_weather(self, random):
         """Creating a day sets the weather at random.
