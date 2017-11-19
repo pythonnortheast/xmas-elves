@@ -31,5 +31,6 @@ omit =
     */admin.py
     */apps.py
     */migrations/*.py
+    */settings.py
 [html]
 directory = coverage_html_report
