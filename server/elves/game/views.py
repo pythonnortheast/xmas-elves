@@ -1,6 +1,6 @@
 """Views for Managing a Session.
 """
-from rest_framework import decorators, response, viewsets
+from rest_framework import decorators, response, status, viewsets
 
 from .models import Day, Session
 from .serializers import DaySerializer, SessionSerializer
@@ -13,14 +13,28 @@ class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
 
-    @decorators.detail_route(methods=['get'], url_path='day')
+    @decorators.detail_route(methods=['get', 'post'], url_path='day')
     def day_list(self, request, pk):
-        """Get the list of days for a given session.
+        """Dispatch the day_list handling.
+
+        When we have a GET, return the list.
+        When we have a POST, create a new day.
+        """
+        method = request.method.lower()
+        return self._day_list() if method == 'get' else self._create_day()
+
+    def _day_list(self):
+        """Return the day list.
         """
         serialized = DaySerializer(self.get_object().days.all(), many=True)
         return response.Response(serialized.data)
 
-    # @decorators.detail_route(methods=['post'], url_path='day')
-    # def create_day(self, request, pk):
-    #     """Create a new day for a session.
-    #     """
+    def _create_day(self):
+        """Create a new day for a session.
+        """
+        serialized = DaySerializer(data=self.request.data,
+                                   context={'session': self.get_object()})
+        serialized.is_valid(raise_exception=True)
+        serialized.save()
+        return response.Response(serialized.data,
+                                 status=status.HTTP_201_CREATED)

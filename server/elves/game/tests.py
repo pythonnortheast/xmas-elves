@@ -257,3 +257,92 @@ class GameTestCase(test.APITestCase):
         self.assertEqual(day['elves_sent'], 12)
         self.assertEqual(day['elves_returned'], 11)
         self.assertEqual(day['money_made'], '60.00')
+
+    def test_create_day_201(self):
+        """Add a day returns 201.
+        """
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 1,
+            })
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED,
+                         msg=response.data)
+
+    @patch('elves.game.models.random')
+    def test_create_day_data(self, random):
+        """Creating a day with the number of elves to send.
+        """
+        random.choice.return_value = 'good'
+
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 1,
+            })
+
+        self.assertDictEqual(
+            response.data,
+            {
+                'day': 3,
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 1,
+                'money_made': '200.00',
+                'elves_sent': 11,
+                'elves_returned': 11,
+                'weather': 'good',
+            })
+
+    @patch('elves.game.models.random')
+    def test_create_send_all_elves(self, random):
+        """Creating a day requires all elves to be sent.
+        """
+        random.choice.return_value = 'good'
+
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 0,
+            })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        self.assertListEqual(response.data['elves_woods'],
+                             ['You must send exactly 11 elves'])
+        self.assertListEqual(response.data['elves_forest'],
+                             ['You must send exactly 11 elves'])
+        self.assertListEqual(response.data['elves_mountains'],
+                             ['You must send exactly 11 elves'])
+        self.assertFalse(random.choice.called)
+
+    @patch('elves.game.models.random')
+    def test_create_too_many_elves(self, random):
+        """Can only send available elves.
+        """
+        random.choice.return_value = 'good'
+
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 2,
+            })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        self.assertListEqual(response.data['elves_woods'],
+                             ['You must send exactly 11 elves'])
+        self.assertListEqual(response.data['elves_forest'],
+                             ['You must send exactly 11 elves'])
+        self.assertListEqual(response.data['elves_mountains'],
+                             ['You must send exactly 11 elves'])
+        self.assertFalse(random.choice.called)
