@@ -61,11 +61,18 @@ class Session(models.Model):
         return self.days.get_current_day()
 
     @property
-    def current_elves(self):
+    def elves_remaining(self):
         """Return the current remaining elves.
 
         This runs an extra query.
         """
+        return self.days.latest().elves_returned
+
+    @property
+    def money_made(self):
+        """Return the total money made for a session.
+        """
+        return sum(d.money_made for d in self.days.all())
 
 
 class Day(models.Model):

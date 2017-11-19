@@ -22,6 +22,24 @@ class SessionTestCase(TestCase):
         session = self._get_session()
         self.assertEqual(session.current_day, 2)
 
+    def test_elves_remaining_session(self):
+        """Each session knows how many elves are left-over.
+        """
+        session = self._get_session()
+        self.assertEqual(session.elves_remaining, 11)
+
+    def test_total_profit(self):
+        """Each session tracks its total profit.
+        """
+        session = self._get_session()
+
+        wood_profit = self._get_woods_profit(8 + 6)  # Day 1 & 2
+        forest_profit = self._get_forest_profit(3)  # Day 1
+        mountain_profit = self._get_mountain_profit(1)  # Day 1
+
+        self.assertEqual(session.money_made,
+                         wood_profit + forest_profit + mountain_profit)
+
     def test_create_day(self):
         """Creating a day adds one to the day count.
         """
