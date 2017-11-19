@@ -42,6 +42,8 @@ class Session(models.Model):
     available to the player in each session.
     """
 
+    MAX_DAYS = 10
+
     uuid = models.UUIDField(primary_key=True, unique=True, default=uuid4)
 
     elves_start = models.PositiveIntegerField(default=12)

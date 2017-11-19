@@ -346,3 +346,35 @@ class GameTestCase(test.APITestCase):
         self.assertListEqual(response.data['elves_mountains'],
                              ['You must send exactly 11 elves'])
         self.assertFalse(random.choice.called)
+
+    @patch('elves.game.models.random')
+    def test_max_turns(self, random):
+        """Can only run the game for 10 rounds.
+        """
+        random.choice.return_value = 'good'
+        for x in range(3, 11):
+            Day.objects.create(
+                elves_woods=11,
+                elves_forest=0,
+                elves_mountains=0,
+                session=self._get_session(),
+                day=x)
+
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': 5,
+                'elves_forest': 5,
+                'elves_mountains': 1,
+            })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST,
+                         msg=response.data['day'])
+
+        self.assertListEqual(response.data['day'],
+                             ['Your elf game has completed at 10 turns!'])
+
+    def _get_session(self):
+        """Get the active session.
+        """
+        return Session.objects.get(pk='fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106')

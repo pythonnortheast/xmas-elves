@@ -59,7 +59,17 @@ class DaySerializer(serializers.ModelSerializer):
         attrs['session'] = self.context['session']
 
         self._validate_total_elves(attrs)
+        self._validate_day()
         return attrs
+
+    def _validate_day(self):
+        """Validate we have not run for more than 10 days.
+        """
+        if self.context['session'].days.count() == Session.MAX_DAYS:
+            raise serializers.ValidationError({
+                'day': 'Your elf game has completed at {} turns!'.format(
+                    Session.MAX_DAYS)
+            })
 
     def _validate_total_elves(self, attrs):
         """Validate elves sent == elves available.
