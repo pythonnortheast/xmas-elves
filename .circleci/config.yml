@@ -46,6 +46,10 @@ jobs:
             . venv/bin/activate
             coverage run --source='server' server/manage.py test elves
 
+      - run:
+          name: coverage report
+          command: coverage html
+
       - store_artifacts:
-          path: .coverage
+          path: coverage_html_report
           destination: coverage-report
