@@ -18,7 +18,8 @@ hyperlink==17.3.1         # via twisted
 incremental==17.5.0       # via twisted
 pytz==2017.3              # via django
 pyyaml==3.12
-six==1.11.0               # via asgiref, autobahn, automat, txaio
+six==1.11.0               # via asgiref, autobahn, automat, txaio, unittest-xml-reporting
 twisted==17.9.0           # via daphne
 txaio==2.8.2              # via autobahn
+unittest-xml-reporting==2.1.0
 zope.interface==4.4.3     # via twisted

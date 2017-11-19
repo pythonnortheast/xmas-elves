@@ -3,3 +3,4 @@ channels
 djangorestframework
 pyyaml
 coverage
+unittest-xml-reporting

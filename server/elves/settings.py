@@ -120,3 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+if 'TEST_RUNNER' in os.environ:
+    TEST_RUNNER = os.environ['TEST_RUNNER']
+    TEST_OUTPUT_DIR = os.environ.get('TEST_OUTPUT_DIR', '.')
