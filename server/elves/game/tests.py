@@ -3,7 +3,10 @@
 from decimal import Decimal
 from unittest.mock import patch
 
+from django.core.urlresolvers import reverse
 from django.test import TestCase
+
+from rest_framework import status, test
 
 from .models import Session, Day
 
@@ -162,3 +165,95 @@ class SessionTestCase(TestCase):
         """Mountains give £50 per elf.
         """
         return Decimal('50.00') * elves
+
+
+class GameTestCase(test.APITestCase):
+    """Test the Elf Game logic.
+    """
+
+    fixtures = [
+        'game/sessions',
+    ]
+
+    SESSION_ID = 'fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106'
+
+    def test_list_response_code(self):
+        """The session-list returns HTTP 200.
+        """
+        response = self.client.get(reverse('session-list'))
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_list_sessions(self):
+        """List the sessions with the player data.
+        """
+        response = self.client.get(reverse('session-list'))
+
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['player_name'], 'Steve Jones')
+
+    def test_new_session_201(self):
+        """New player session returns 201.
+        """
+        response = self.client.post(reverse('session-list'),
+                                    {'player_name': 'James Smith'})
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_new_session_data(self):
+        """New player session returns information for querying + adding days.
+        """
+        response = self.client.post(reverse('session-list'),
+                                    {'player_name': 'James Smith'})
+
+        self.assertEqual(response.data['player_name'], 'James Smith')
+        self.assertTrue(response.data['uuid'])
+        self.assertEqual(response.data['elves_remaining'], 12)
+        self.assertEqual(response.data['money_made'], '0.00')
+
+    def test_list_days_200(self):
+        """The list of days returns HTTP 200.
+        """
+        response = self.client.get(reverse('session-day',
+                                           kwargs={'pk': self.SESSION_ID}))
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_day_list(self):
+        """The list of days returns each day's info for a session.
+        """
+        response = self.client.get(reverse('session-day',
+                                           kwargs={'pk': self.SESSION_ID}))
+
+        self.assertEqual(len(response.data), 2)
+
+    def test_day_order(self):
+        """Days are ordered by day #
+        """
+        response = self.client.get(reverse('session-day',
+                                           kwargs={'pk': self.SESSION_ID}))
+
+        for i, day in enumerate(response.data, start=1):
+            self.assertEqual(day['day'], i)
+
+    def test_get_day_1(self):
+        """Day 1 maps to the first day.
+        """
+        response = self.client.get(reverse('session-day',
+                                           kwargs={'pk': self.SESSION_ID}))
+
+        day = response.data[0]
+        self.assertEqual(day['elves_sent'], 12)
+        self.assertEqual(day['elves_returned'], 12)
+        self.assertEqual(day['money_made'], '190.00')
+
+    def test_get_day_2(self):
+        """Day 2 maps to the second day.
+        """
+        response = self.client.get(reverse('session-day',
+                                           kwargs={'pk': self.SESSION_ID}))
+
+        day = response.data[1]
+        self.assertEqual(day['elves_sent'], 12)
+        self.assertEqual(day['elves_returned'], 11)
+        self.assertEqual(day['money_made'], '60.00')

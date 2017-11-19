@@ -5,6 +5,7 @@ import random
 from decimal import Decimal
 from uuid import uuid4
 
+from django.core import exceptions
 from django.db import models
 
 
@@ -66,7 +67,11 @@ class Session(models.Model):
 
         This runs an extra query.
         """
-        return self.days.latest().elves_returned
+        try:
+            last_day = self.days.latest()
+        except exceptions.ObjectDoesNotExist:
+            return self.elves_start
+        return last_day.elves_returned
 
     @property
     def money_made(self):
@@ -120,18 +125,14 @@ class Day(models.Model):
     def __str__(self):
         """The string representation.
         """
-        total_elves = sum(self.elves_forest,
-                          self.elves_mountain,
-                          self.elves_woods)
-
         return 'Day {s.day} for Session {session} with {elves} elves'.format(
-            s=self, session=self.session.uuid, elves=total_elves)
+            s=self, session=self.session.uuid, elves=self.elves_sent)
 
     @property
     def elves_sent(self):
         """Return the total elves sent.
         """
-        return sum([self.elves_forest, self.elves_mountains, self.elves_woods])
+        return self.elves_forest + self.elves_mountains + self.elves_woods
 
     @property
     def elves_returned(self):

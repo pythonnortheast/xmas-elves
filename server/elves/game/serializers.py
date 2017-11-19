@@ -20,6 +20,11 @@ class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         exclude = 'elves_start',
         model = Session
+        extra_kwargs = {
+            'uuid': {
+                'read_only': True,
+            },
+        }
 
 
 class DaySerializer(serializers.ModelSerializer):
@@ -28,6 +33,8 @@ class DaySerializer(serializers.ModelSerializer):
 
     elves_sent = serializers.IntegerField(read_only=True)
     elves_returned = serializers.IntegerField(read_only=True)
+    money_made = serializers.DecimalField(read_only=True, max_digits=10,
+                                          decimal_places=2)
 
     class Meta:
         exclude = 'session', 'id'
