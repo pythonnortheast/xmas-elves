@@ -1,6 +1,8 @@
 """Model the basic game systems.
 """
 import random
+
+from decimal import Decimal
 from uuid import uuid4
 
 from django.db import models
@@ -77,6 +79,10 @@ class Day(models.Model):
         ('snow', 'Snow'),
     )
 
+    WOODS_VALUE = Decimal('10.00')
+    FOREST_VALUE = Decimal('20.00')
+    MOUNTAINS_VALUE = Decimal('50.00')
+
     session = models.ForeignKey(Session, related_name='days')
 
     day = models.PositiveIntegerField(help_text='The day number of this game')
@@ -104,3 +110,42 @@ class Day(models.Model):
 
         return 'Day {s.day} for Session {session} with {elves} elves'.format(
             s=self, session=self.session.uuid, elves=total_elves)
+
+    @property
+    def elves_sent(self):
+        """Return the total elves sent.
+        """
+        return sum([self.elves_forest, self.elves_mountains, self.elves_woods])
+
+    @property
+    def elves_returned(self):
+        """Return the total elves that returned safely.
+
+        In good weather, all elves return.
+        In snowy weather, only elves sent to the forest and woods return.
+        """
+        if self.weather == 'good':
+            return self.elves_sent
+
+        return self.elves_forest + self.elves_woods
+
+    @property
+    def money_made(self):
+        """Return the total money made by the elves.
+
+        Woods are £10 per elf.
+        Forests are £20 per elf.
+        Mountains are £50 per elf.
+
+        In good weather, all elves return. In snowy weather, only elves sent to
+        the woods return with money.
+        """
+        elves_woods = self.elves_woods * self.WOODS_VALUE
+
+        if self.weather == 'snow':
+            return elves_woods
+
+        elves_forest = self.elves_forest * self.FOREST_VALUE
+        elves_mountains = self.elves_mountains * self.MOUNTAINS_VALUE
+
+        return elves_woods + elves_forest + elves_mountains
