@@ -48,8 +48,9 @@ jobs:
 
       - run:
           name: coverage report
-          command: coverage html
-
+          command: |
+            . venv/bin/activate
+            coverage html
       - store_artifacts:
           path: coverage_html_report
           destination: coverage-report
