@@ -90,19 +90,28 @@ class Day(models.Model):
     FOREST_VALUE = Decimal('20.00')
     MOUNTAINS_VALUE = Decimal('50.00')
 
-    session = models.ForeignKey(Session, related_name='days')
+    session = models.ForeignKey(Session, related_name='days',
+                                help_text='The session for the day.')
 
-    day = models.PositiveIntegerField(help_text='The day number of this game')
+    day = models.PositiveIntegerField(help_text='The current day.')
     weather = models.CharField(
         choices=WEATHER_CHOICES, max_length=10,
-        help_text='The autocalculated weather for the day')
+        help_text='The autocalculated weather for the day. If the weather is '
+        'good, all elves will return. If it snowed, all elves sent to the '
+        'mountains will die and any elves sent to the forest return '
+        'empty-handed.')
 
     elves_woods = models.PositiveIntegerField(
-        help_text='Elves sent to the woods by the player')
+        help_text='Elves sent to the woods by the player. These elves acquire '
+        '£10 worth of wood for this day.')
     elves_forest = models.PositiveIntegerField(
-        help_text='Elves sent to the forest by the player')
+        help_text='Elves sent to the forest by the player. These elves acquire '
+        '£20 worth of wood for this day if the weather was good. If not, they '
+        'will return empty-handed.')
     elves_mountains = models.PositiveIntegerField(
-        help_text='Elves sent to the mountains by the player')
+        help_text='Elves sent to the mountains by the player. These elves '
+        'acquire £50 worth of wood for this day if the weather was good. If '
+        'not, they will all die.')
 
     class Meta:
         get_latest_by = 'day'
