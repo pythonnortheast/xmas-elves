@@ -2,6 +2,7 @@ channels
 coreapi
 coverage
 django
+django-filter
 djangorestframework
 pyyaml
 unittest-xml-reporting

@@ -189,8 +189,25 @@ class GameTestCase(test.APITestCase):
         """
         response = self.client.get(reverse('session-list'))
 
+        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data[0]['player_name'], 'Steve Jones')
+
+    def test_active_sessions(self):
+        """Return only active sessions - less than 10 days played.
+        """
+        response = self.client.get(reverse('session-list'), {'active': 'only'})
+
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]['player_name'], 'Steve Jones')
+
+    def test_completed_sessions(self):
+        """Return only completed sessions - 10 days played.
+        """
+        response = self.client.get(reverse('session-list'),
+                                   {'active': 'complete'})
+
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['player_name'], 'John Smith')
 
     def test_new_session_201(self):
         """New player session returns 201.

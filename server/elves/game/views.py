@@ -2,7 +2,8 @@
 """
 from rest_framework import decorators, response, status, viewsets
 
-from .models import Day, Session
+from .filters import SessionFilterSet
+from .models import Session
 from .serializers import DaySerializer, SessionSerializer
 
 
@@ -10,6 +11,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     """Manage a Session and its Days.
     """
 
+    filter_class = SessionFilterSet
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
 

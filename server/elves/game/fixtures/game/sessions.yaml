@@ -1,7 +1,6 @@
 - pk: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
   model: game.Session
   fields:
-    uuid: fd5b2d8e-78f9-40b3-9d6a-3c39a17ba106
     elves_start: 12
     player_name: Steve Jones
 
@@ -22,5 +21,111 @@
     day: 2
     elves_woods: 6
     elves_forest: 5
+    elves_mountains: 1
+    weather: snow
+
+- pk: b299778c-b7c2-4ffb-8403-d6dfe6923793
+  model: game.Session
+  fields:
+    elves_start: 12
+    player_name: John Smith
+
+- pk: 3
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 1
+    elves_woods: 8
+    elves_forest: 3
+    elves_mountains: 1
+    weather: good
+
+- pk: 4
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 2
+    elves_woods: 6
+    elves_forest: 5
+    elves_mountains: 1
+    weather: snow
+
+- pk: 5
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 3
+    elves_woods: 8
+    elves_forest: 2
+    elves_mountains: 1
+    weather: good
+
+- pk: 6
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 4
+    elves_woods: 6
+    elves_forest: 4
+    elves_mountains: 0
+    weather: snow
+
+- pk: 7
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 5
+    elves_woods: 7
+    elves_forest: 3
+    elves_mountains: 0
+    weather: good
+
+- pk: 8
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 6
+    elves_woods: 5
+    elves_forest: 5
+    elves_mountains: 0
+    weather: snow
+
+- pk: 9
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 7
+    elves_woods: 8
+    elves_forest: 1
+    elves_mountains: 1
+    weather: good
+
+- pk: 10
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 8
+    elves_woods: 6
+    elves_forest: 3
+    elves_mountains: 1
+    weather: snow
+
+- pk: 11
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 9
+    elves_woods: 6
+    elves_forest: 3
+    elves_mountains: 0
+    weather: snow
+
+- pk: 12
+  model: game.Day
+  fields:
+    session: b299778c-b7c2-4ffb-8403-d6dfe6923793
+    day: 10
+    elves_woods: 6
+    elves_forest: 2
     elves_mountains: 1
     weather: snow

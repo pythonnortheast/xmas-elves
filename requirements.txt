@@ -16,6 +16,7 @@ coreapi==2.3.3
 coreschema==0.0.4         # via coreapi
 coverage==4.4.2
 daphne==1.3.0             # via channels
+django-filter==1.1.0
 django==1.11.7
 djangorestframework==3.7.3
 hyperlink==17.3.1         # via twisted

@@ -18,9 +18,11 @@ class DayQuerySet(models.QuerySet):
 
         The front-end user shouldn't be able to determine the day.
         """
+        if 'session' not in kwargs:
+            raise ValueError('A session must be assigned')
         if 'day' not in kwargs:
             kwargs['day'] = self.filter(
-                session=models.F('session')).aggregate(
+                session=kwargs['session']).aggregate(
                     latest=models.functions.Coalesce(models.Max('day'), 0)
             )['latest'] + 1
 
