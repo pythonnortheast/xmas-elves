@@ -27,7 +27,8 @@ python server/manage.py runserver
 ## The API
 
 To interact with the server session, we use a simple REST API to send new data
-into the server.
+into the server. The full API docs can be found by running a server and
+navigating to `/docs/`.
 
 ### Starting a New Session
 
@@ -35,7 +36,7 @@ To start a new session, send a `POST` request with a `name` variable
 form-encoded to `https://<host>/sessions/`:
 
 ```bash
-curl https://example.com/sessions/ -X POST -d name="Scott"
+curl https://example.com/sessions/ -X POST -d player_name="Scott"
 ```
 
 and you'll get a simple JSON object back with a `session` URL that you post your
@@ -43,6 +44,8 @@ turns against.
 
 ### Taking a Turn
 
+
+To take a turn, make a `POST` request against the `day` endpoint of a session.
 
 
 ## Creating Clients
