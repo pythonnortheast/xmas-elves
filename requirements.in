@@ -1,6 +1,7 @@
-django
 channels
+coreapi
+coverage
+django
 djangorestframework
 pyyaml
-coverage
 unittest-xml-reporting

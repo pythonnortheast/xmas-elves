@@ -13,7 +13,8 @@ class SessionViewSet(viewsets.ModelViewSet):
     queryset = Session.objects.all()
     serializer_class = SessionSerializer
 
-    @decorators.detail_route(methods=['get', 'post'], url_path='day')
+    @decorators.detail_route(methods=['get', 'post'], url_path='day',
+                             serializer_class=DaySerializer)
     def day_list(self, request, pk):
         """Dispatch the day_list handling.
 
@@ -26,7 +27,8 @@ class SessionViewSet(viewsets.ModelViewSet):
     def _day_list(self):
         """Return the day list.
         """
-        serialized = DaySerializer(self.get_object().days.all(), many=True)
+        serialized = self.get_serializer(
+            self.get_object().days.all(), many=True)
         return response.Response(serialized.data)
 
     def _create_day(self):
