@@ -32,4 +32,6 @@ class SessionFilterSet(filters.FilterSet):
         elif value == 'complete':
             lookup = '__'.join([name, 'gte'])
 
-        return queryset.filter(**{lookup: 10})
+        # Ignore below from coverage reports django-filters will never execute
+        # this method if value is not in CHOICES
+        return queryset.filter(**{lookup: 10})  # pragma: no cover
