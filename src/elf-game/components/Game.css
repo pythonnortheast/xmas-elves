@@ -1,14 +1,14 @@
-.Game td {
+.Game-row td {
   border: 1px solid #777;
   border-collapse: collapse;
   padding: 10px 20px;
   text-align: left;
 }
 
-.Game .number {
+.Game-row .number {
   text-align: right;
 }
 
-.Game .amount {
+.Game-row .amount {
   text-align: right;
 }

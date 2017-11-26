@@ -1,26 +1,20 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import "./Games.css";
 
 import Game from "./Game";
+import { mapGameListToProps } from "../actions";
 
-class Table extends Component {
+class GameTable extends Component {
   static propTypes = {
-    games: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any))
+    games: PropTypes.arrayOf(PropTypes.string)
   };
 
   render() {
-    const games = this.props.games.map(game => (
-      <Game
-        current_day={game.current_day}
-        player_name={game.player_name}
-        elves_remaining={game.elves_remaining}
-        money_made={game.money_made}
-      />
-    ));
     return (
-      <table class="Games">
+      <table className="Games">
         <thead>
           <tr>
             <th>Player Name</th>
@@ -29,10 +23,10 @@ class Table extends Component {
             <th>Money Made</th>
           </tr>
         </thead>
-        <tbody>{games}</tbody>
+        <tbody>{this.props.games.map(uuid => <Game uuid={uuid} />)}</tbody>
       </table>
     );
   }
 }
 
-export default Table;
+export default connect(mapGameListToProps)(GameTable);

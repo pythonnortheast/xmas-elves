@@ -6,14 +6,6 @@ import Games from "./elf-game/components/Games";
 
 class App extends Component {
   render() {
-    const games = [
-      {
-        player_name: "Steve",
-        current_day: 5,
-        elves_remaining: 4,
-        money_made: "150.00"
-      }
-    ];
     return (
       <div className="App">
         <header className="App-header">
@@ -27,7 +19,7 @@ class App extends Component {
           </a>
         </p>
 
-        <Games games={games} />
+        <Games />
       </div>
     );
   }
