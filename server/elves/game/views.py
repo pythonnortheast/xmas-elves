@@ -66,9 +66,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         """
         serializer = SessionSerializer(instance)
 
-        output = dumps({
-            'session': serializer.data,
-        })
+        output = dumps(serializer.data)
         Group('session').send({
             'text': output
         })
