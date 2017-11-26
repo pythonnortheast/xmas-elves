@@ -19,7 +19,9 @@ class App extends Component {
           </a>
         </p>
 
-        <Games />
+        <div className="App-content">
+          <Games />
+        </div>
       </div>
     );
   }
