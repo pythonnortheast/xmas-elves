@@ -7,7 +7,6 @@ export function requestGames() {
 }
 
 export function resetGameList(json) {
-  console.log(json);
   return {
     type: "RESET_GAME_LIST",
     games: json,

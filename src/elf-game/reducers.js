@@ -16,7 +16,6 @@ function games(state = {}, action) {
     case "RESET_GAME_LIST":
       return getGameList(action.games);
     case "UPDATE_GAME":
-      console.log(action);
       return updateGameList(state, action.game);
     default:
       return state;

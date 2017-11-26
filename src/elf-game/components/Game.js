@@ -12,7 +12,6 @@ class Game extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <tr className="Game-row">
         <td>{this.props.player_name}</td>
