@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { sortBy } from "lodash";
 
 import Games from "../components/Games";
 
@@ -11,7 +12,11 @@ import Games from "../components/Games";
  * @return {Object[]} The sorted list of games.
  */
 function mapGameListToProps(state) {
-  return { games: state.games.uuids };
+  const uuids = sortBy(state.games.uuids, uuid => {
+    const game = state.games.gameMap[uuid];
+    return parseFloat(game.money_made) * -1;
+  });
+  return { games: uuids };
 }
 
 export default connect(mapGameListToProps)(Games);
