@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
  * @param {Object} state The existing state object.
  * @param {Object} action The action to perform.
  * @param {string} action.type The action to perform.
+ * @param {string} action.status Either 'success' or 'error'.
  * @param {Object[]} [action.games] The list of games.
  * @return {Object} The new state object.
  */

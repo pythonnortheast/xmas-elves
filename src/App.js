@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-import Games from "./elf-game/components/Games";
+import Games from "./elf-game/containers/Games";
 
 class App extends Component {
   render() {

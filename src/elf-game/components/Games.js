@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 import "./Games.css";
 
-import Game from "./Game";
-import { mapGameListToProps } from "../actions";
+import Game from "../containers/Game";
 
 class GameTable extends Component {
   static propTypes = {
@@ -23,10 +21,12 @@ class GameTable extends Component {
             <th>Money Made</th>
           </tr>
         </thead>
-        <tbody>{this.props.games.map(uuid => <Game uuid={uuid} />)}</tbody>
+        <tbody>
+          {this.props.games.map(uuid => <Game key={uuid} uuid={uuid} />)}
+        </tbody>
       </table>
     );
   }
 }
 
-export default connect(mapGameListToProps)(GameTable);
+export default GameTable;

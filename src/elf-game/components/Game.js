@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-
-import { mapGameToProps } from "../actions";
 
 import "./Game.css";
 
 class Game extends Component {
   static propTypes = {
-    uuid: PropTypes.string,
     current_day: PropTypes.number,
     elves_remaining: PropTypes.number,
     money_made: PropTypes.string,
@@ -16,6 +12,7 @@ class Game extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <tr className="Game-row">
         <td>{this.props.player_name}</td>
@@ -27,4 +24,4 @@ class Game extends Component {
   }
 }
 
-export default connect(mapGameToProps)(Game);
+export default Game;
