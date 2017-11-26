@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'channels',
+
     'django_filters',
     'rest_framework',
 
@@ -130,6 +132,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "elves.game.routing.CHANNEL_ROUTING",
+    },
+}
 
 if 'TEST_RUNNER' in os.environ:
     TEST_RUNNER = os.environ['TEST_RUNNER']

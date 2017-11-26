@@ -1,9 +1,12 @@
 """Views for Managing a Session.
 """
+from json import dumps
+
+from channels import Group
 from rest_framework import decorators, response, status, viewsets
 
 from .filters import SessionFilterSet
-from .models import Session
+from .models import Day, Session
 from .serializers import DaySerializer, SessionSerializer
 
 
@@ -26,6 +29,12 @@ class SessionViewSet(viewsets.ModelViewSet):
         method = request.method.lower()
         return self._day_list() if method == 'get' else self._create_day()
 
+    def perform_create(self, serializer: SessionSerializer):
+        """Create the new session and send to the websocket.
+        """
+        instance = serializer.save()
+        self._send_to_websocket(instance)
+
     def _day_list(self):
         """Return the day list.
         """
@@ -35,10 +44,30 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     def _create_day(self):
         """Create a new day for a session.
+
+        Sends the created day to the websocket.
         """
         serialized = DaySerializer(data=self.request.data,
                                    context={'session': self.get_object()})
         serialized.is_valid(raise_exception=True)
-        serialized.save()
+        instance = serialized.save()
+        self._send_day_to_websocket(instance)
         return response.Response(serialized.data,
                                  status=status.HTTP_201_CREATED)
+
+    def _send_day_to_websocket(self, instance: Day):
+        """Send the passed-in day to the websocket.
+        """
+        self._send_to_websocket(instance.session)
+
+    def _send_to_websocket(self, instance: Session):
+        """Send the updated game session information.
+        """
+        serializer = self.get_serializer(instance)
+
+        output = dumps({
+            'session': serializer.data,
+        })
+        Group('session').send({
+            'text': output
+        })
