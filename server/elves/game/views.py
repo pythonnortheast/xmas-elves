@@ -2,6 +2,7 @@
 """
 from json import dumps
 
+from django.http.request import HttpRequest
 from channels import Group
 from rest_framework import decorators, response, status, viewsets
 
@@ -20,7 +21,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     @decorators.detail_route(methods=['get', 'post'], url_path='day',
                              serializer_class=DaySerializer)
-    def day_list(self, request, pk):
+    def day_list(self, request: HttpRequest, pk: int):
         """Dispatch the day_list handling.
 
         When we have a GET, return the list.
@@ -63,7 +64,7 @@ class SessionViewSet(viewsets.ModelViewSet):
     def _send_to_websocket(self, instance: Session):
         """Send the updated game session information.
         """
-        serializer = self.get_serializer(instance)
+        serializer = SessionSerializer(instance)
 
         output = dumps({
             'session': serializer.data,
