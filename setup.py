@@ -12,6 +12,7 @@ setup(name='pyne-xmas-elves',
       author_email='scott@pythonnortheast.com',
       license='MIT',
       packages=['server.elves'],
+      python_requires='>=3.5',
       install_requires=requirements,
       scripts=[
           'bin/runserver.py',
