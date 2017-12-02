@@ -4,5 +4,6 @@ coverage
 django
 django-filter
 djangorestframework
+m2r
 pyyaml
 unittest-xml-reporting
