@@ -1,0 +1,13 @@
+[Unit]
+Description=Christmas Elves Server
+After=network.target
+
+[Service]
+Type=simple
+User=www
+WorkingDirectory=/home/www/xmas-elves/xmas-elves
+ExecStart=/home/www/xmas-elves/venv/runserver
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
