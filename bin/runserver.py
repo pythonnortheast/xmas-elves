@@ -9,6 +9,7 @@ def run():
         exit(1)
 
     print('Starting server...')
+    subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
     subprocess.run(['python', 'server/manage.py', 'migrate', '--noinput'])
     subprocess.run(['python', 'server/manage.py', 'runserver'])
 
