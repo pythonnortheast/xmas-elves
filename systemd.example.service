@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=www
 WorkingDirectory=/home/www/xmas-elves/xmas-elves
-ExecStart=/home/www/xmas-elves/venv/bin/python bin/runserver.py
+ExecStart=/home/www/xmas-elves/venv/bin/python server/manage.py runserver
 Restart=on-abort
 
 [Install]
