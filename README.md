@@ -5,6 +5,66 @@ The annual Christmas Elves game server and client
 Python North East December brings you the Christmas Elf Challenge. Your task,
 should you choose to accept it, is to collect the most
 
+## Running your Game
+
+This part of the guide will give you the instructions to set up the game so you
+can start trying to set a high score!
+
+### Installation
+
+Make sure you have Python installed - if you have Windows, check out the
+[Beginner's Guide of the Xmas Elves document][xmas-elves-doc].
+
+Once you're ready, you can get the client code running:
+
+```bash
+pyvenv venv
+. venv/bin/activate
+pip install pyne-xmas-elves
+```
+
+### Building your Bot
+
+Create your game file, called `game.py`:
+
+```python
+from pyne_xmas_elves.client import BaseGame
+
+
+class Game(BaseGame):
+    """Your main Game Class.
+    """
+
+    def turn(self, elves_available):
+        """Take a single turn.
+
+        The elves_available argument will tell you how many elves you can use
+        as a guide.
+        """
+        send_to_woods = elves_available // 2
+        send_to_forest = (elves_available - send_to_woods) // 2
+        send_to_mountains = elves_available - send_to_forest
+        return (send_to_woods,
+                send_to_forest,
+                send_to_mountains)
+```
+
+#### Helper Attributes
+
+While taking a turn, you can access the following attributes on `self`:
+
+* `amount_raised`
+* `current_turn`
+* `last_turn`
+
+### Run the game
+
+After creating your bot, you can run the game:
+
+```bash
+elves game
+```
+
 ## Running the Server
 
 ### Installing Dependencies
@@ -44,13 +104,11 @@ turns against.
 
 ### Taking a Turn
 
-
 To take a turn, make a `POST` request against the `day` endpoint of a session.
-
-
-## Creating Clients
 
 ## Instructions and Rules
 
-See the [attached Google Doc](https://docs.google.com/document/d/1p3upVEv7zDcT_0ZQKbJqo_nudHUwIoLAo1TkxzBb7ZA/edit?usp=sharing)
-for the rules and any of the latest tips and tricks.
+See the [attached Google Doc][xmas-elves-doc] for the rules and any of the
+latest tips and tricks.
+
+[xmas-elves-doc]: https://docs.google.com/document/d/1p3upVEv7zDcT_0ZQKbJqo_nudHUwIoLAo1TkxzBb7ZA/edit?usp=sharing
