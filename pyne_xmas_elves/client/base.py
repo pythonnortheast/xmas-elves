@@ -31,6 +31,32 @@ class BaseGame:
         self._session_id = uuid
         self._elves_remaining = elves
         self._money_made = money
+        self._weather = None
+        self._current_turn = 1
+
+    @property
+    def amount_raised(self):
+        """Return the amount raised in total.
+        """
+        return self._money_made
+
+    @property
+    def current_turn(self):
+        """Return the current turn.
+        """
+        return self._current_turn
+
+    @property
+    def last_turn(self):
+        """Return the number representing the last turn #.
+        """
+        return self.MAX_TURNS
+
+    @property
+    def previous_weather(self):
+        """Return the weather from sending the previous turn.
+        """
+        return self._weather
 
     def run(self):
         """Execute the game engine.
@@ -47,16 +73,24 @@ class BaseGame:
                                           elves_available)
 
             print('Sending your elves:\n'
-                  'Woods: {wood}\n'
-                  'Forest: {forest}\n'
-                  'Mountains: {mountain}'.format(wood=wood,
-                                                 forest=forest,
-                                                 mountain=mountain))
+                  '\tWoods: {wood}\n'
+                  '\tForest: {forest}\n'
+                  '\tMountains: {mountain}'.format(wood=wood,
+                                                   forest=forest,
+                                                   mountain=mountain))
 
             data = self._send_day(wood, forest, mountain)
-            self._money_made = Decimal(data['money_made'])
-            self._elves_remaining = elves_available = data['elves_remaining']
+            self._money_made += Decimal(data['money_made'])
+            self._elves_remaining = elves_available = data['elves_returned']
             self._weather = data['weather']
+
+            print('Elves returned.\n'
+                  '\tMoney made: {money}\n'
+                  '\tWeather was: {weather}\n'
+                  '\tElves returned: {returned}\n'.format(
+                      money=self._money_made,
+                      weather=self._weather,
+                      returned=self._elves_remaining))
 
     def start_session(self):
         """Generate a Session ID and return it.

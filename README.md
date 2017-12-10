@@ -55,9 +55,10 @@ class Game(BaseGame):
 
 While taking a turn, you can access the following attributes on `self`:
 
-* `amount_raised`
-* `current_turn`
-* `last_turn`
+* `amount_raised` - total money raised
+* `current_turn` - the current turn number
+* `last_turn` - what the last turn number will be
+* `previous_weather` - the weather from the previous expedition
 
 ### Run the game
 
