@@ -13,7 +13,7 @@ except (IOError, FileNotFoundError):
     DESCRIPTION = ''
 
 setup(name='pyne-xmas-elves',
-      version='0.6.0',
+      version='0.6.1',
       description='The Great Elf Game adapted for Python North East - client '
       '& server',
       url='http://github.com/pythonnortheast/xmas-elves',
@@ -24,5 +24,5 @@ setup(name='pyne-xmas-elves',
       packages=['pyne_xmas_elves.client', 'pyne_xmas_elves.server'],
       python_requires='>=3.5',
       install_requires=requirements,
-      scripts=['bin/elves'],
+      scripts=['bin/elves.py'],
       zip_safe=False)
