@@ -61,9 +61,12 @@ class BaseGame:
     def start_session(self):
         """Generate a Session ID and return it.
         """
-        rtn = requests.post(self._generate_url('game/'),
-                            {'player_name': self.PLAYER_NAME})
-        return rtn['uuid'], rtn['elves_remaining'], Decimal(rtn['money_made'])
+        response = requests.post(self._generate_url('game/'),
+                                 {'player_name': self.PLAYER_NAME})
+        data = response.json()
+        return (data['uuid'],
+                data['elves_remaining'],
+                Decimal(data['money_made']))
 
     def _generate_url(self, path):
         """Get the URL.
