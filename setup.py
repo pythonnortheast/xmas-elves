@@ -2,7 +2,7 @@ from os import path
 from setuptools import setup
 import m2r
 
-with open('requirements.txt') as f:
+with open(path.abspath('requirements.txt')) as f:
     requirements = [l.split(' ')[0] for l in f.readlines()]
 
 readme_file = path.join(path.dirname(path.abspath(__file__)),
@@ -13,7 +13,7 @@ except (IOError, FileNotFoundError):
     DESCRIPTION = ''
 
 setup(name='pyne-xmas-elves',
-      version='0.6.1',
+      version='0.6.2',
       description='The Great Elf Game adapted for Python North East - client '
       '& server',
       url='http://github.com/pythonnortheast/xmas-elves',

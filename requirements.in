@@ -1,10 +1,12 @@
 channels
 coreapi
 coverage
+cryptography
 django
 django-filter
 djangorestframework
 m2r
+pyopenssl
 pyyaml
 requests
 unittest-xml-reporting
