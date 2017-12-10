@@ -58,6 +58,13 @@ class BaseGame:
         """
         return self._weather
 
+    def turn(self, elves_remaining):
+        """Implement this method to run the game.
+        """
+        raise NotImplementedError('The "turn" method must be implemented. It '
+                                  'takes the "elves_remaining" argument as an '
+                                  'integer')
+
     def run(self):
         """Execute the game engine.
         """
