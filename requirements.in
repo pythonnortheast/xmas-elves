@@ -6,4 +6,5 @@ django-filter
 djangorestframework
 m2r
 pyyaml
+requests
 unittest-xml-reporting

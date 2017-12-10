@@ -35,6 +35,8 @@ class Game(BaseGame):
     """Your main Game Class.
     """
 
+    PLAYER_NAME = 'Tom Cooper'
+
     def turn(self, elves_available):
         """Take a single turn.
 

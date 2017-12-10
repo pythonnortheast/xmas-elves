@@ -30,7 +30,7 @@ markupsafe==1.0           # via jinja2
 mistune==0.8.1            # via m2r
 pytz==2017.3              # via django
 pyyaml==3.12
-requests==2.18.4          # via coreapi
+requests==2.18.4
 six==1.11.0               # via asgiref, autobahn, automat, txaio, unittest-xml-reporting
 twisted==17.9.0           # via daphne
 txaio==2.8.2              # via autobahn
