@@ -8,12 +8,19 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  background: url("./xmas-elves-banner.png");
+  background-size: cover;
+  background-position: center;
+  height: 600px;
   padding: 20px;
   color: white;
 }
 
+.App-overlay {
+  background: rgba(255, 255, 255, 0.5);
+  margin-top: -120px;
+  padding-top: 20px;
+}
 .App-title {
   font-size: 1.5em;
 }
