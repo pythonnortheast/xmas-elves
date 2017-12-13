@@ -364,6 +364,22 @@ class GameTestCase(test.APITestCase):
                              ['You must send exactly 11 elves'])
         self.assertFalse(random.choice.called)
 
+    def test_positive_elves(self):
+        """Each elf field must be a positive number.
+        """
+        response = self.client.post(
+            reverse('session-day', kwargs={'pk': self.SESSION_ID}),
+            {
+                'elves_woods': -5,
+                'elves_forest': 10,
+                'elves_mountains': 6,
+            })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        self.assertListEqual(response.data['elves_woods'],
+                             ['This field must be >= 0'])
+
     @patch('elves.game.models.random')
     def test_max_turns(self, random):
         """Can only run the game for 10 rounds.

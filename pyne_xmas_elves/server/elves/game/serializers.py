@@ -3,6 +3,7 @@
 from rest_framework import serializers
 
 from .models import Day, Session
+from .validators import positive_number
 
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -45,6 +46,15 @@ class DaySerializer(serializers.ModelSerializer):
             },
             'weather': {
                 'read_only': True,
+            },
+            'elves_woods': {
+                'validators': [positive_number],
+            },
+            'elves_forest': {
+                'validators': [positive_number],
+            },
+            'elves_mountains': {
+                'validators': [positive_number],
             },
         }
         model = Day
