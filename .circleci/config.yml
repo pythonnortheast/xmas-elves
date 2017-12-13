@@ -47,7 +47,7 @@ jobs:
             TEST_OUTPUT_DIR: /tmp/test-results
           command: |
             . venv/bin/activate
-            coverage run --source='server' server/manage.py test elves
+            coverage run --source='server' pyne_xmas_elves/server/manage.py test elves
 
       - run:
           name: coverage report
