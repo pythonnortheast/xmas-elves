@@ -3,7 +3,8 @@
 The annual Christmas Elves game server and client
 
 Python North East December brings you the Christmas Elf Challenge. Your task,
-should you choose to accept it, is to collect the most
+should you choose to accept it, is to manage the Christmas Tree selling
+business.
 
 ## Running your Game
 
@@ -32,23 +33,14 @@ from pyne_xmas_elves.client import BaseGame
 
 
 class Game(BaseGame):
-    """Your main Game Class.
-    """
+    PLAYER_NAME = 'Father Christmas'
 
-    PLAYER_NAME = 'Tom Cooper'
+    def turn(self, elves):
+        woods = elves // 2
+        forest = (elves - woods) // 2
+        mountain = elves - woods - forest
+        return woods, forest, mountains
 
-    def turn(self, elves_available):
-        """Take a single turn.
-
-        The elves_available argument will tell you how many elves you can use
-        as a guide.
-        """
-        send_to_woods = elves_available // 2
-        send_to_forest = (elves_available - send_to_woods) // 2
-        send_to_mountains = elves_available - send_to_forest
-        return (send_to_woods,
-                send_to_forest,
-                send_to_mountains)
 ```
 
 #### Helper Attributes
@@ -57,8 +49,8 @@ While taking a turn, you can access the following attributes on `self`:
 
 * `amount_raised` - total money raised
 * `current_turn` - the current turn number
-* `last_turn` - what the last turn number will be
-* `previous_weather` - the weather from the previous expedition
+* `last_turn` - the last turn number
+* `previous_weather` - the weather on the previous day
 
 ### Run the game
 
@@ -68,7 +60,7 @@ After creating your bot, you can run the game:
 elves game
 ```
 
-## Running the Server
+## Running the Server (optional)
 
 ### Installing Dependencies
 
