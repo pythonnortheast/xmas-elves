@@ -8,6 +8,7 @@ from rest_framework import decorators, response, status, viewsets
 
 from .filters import SessionFilterSet
 from .models import Day, Session
+from .paginators import ResultsPaginator
 from .serializers import DaySerializer, SessionSerializer
 
 
@@ -17,6 +18,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     filter_class = SessionFilterSet
     queryset = Session.objects.all()
+    pagination_class = ResultsPaginator
     serializer_class = SessionSerializer
 
     @decorators.detail_route(methods=['get', 'post'], url_path='day',
@@ -52,7 +54,9 @@ class SessionViewSet(viewsets.ModelViewSet):
                                    context={'session': self.get_object()})
         serialized.is_valid(raise_exception=True)
         instance = serialized.save()
+
         self._send_day_to_websocket(instance)
+
         return response.Response(serialized.data,
                                  status=status.HTTP_201_CREATED)
 

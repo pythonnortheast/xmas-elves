@@ -111,7 +111,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',
-    ]
+    ],
+    'MAX_PAGE_SIZE': 500,
+    'PAGE_SIZE': 100,
 }
 
 # Internationalization
