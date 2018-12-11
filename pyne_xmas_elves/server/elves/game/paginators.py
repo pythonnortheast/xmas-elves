@@ -1,4 +1,4 @@
-from rest_framework import pagination
+from rest_framework import pagination, response
 
 
 class ResultsPaginator(pagination.LimitOffsetPagination):
@@ -8,8 +8,11 @@ class ResultsPaginator(pagination.LimitOffsetPagination):
     Works like LimitOffsetPagination.
     """
 
+    default_limit = 100
+    max_limit = 200
+
     def get_paginated_response(self, data):
         """
         Return the results in data.
         """
-        return data
+        return response.Response(data)
